@@ -8,7 +8,7 @@ module.exports = {
   getProfile,
   getProduct,
   addProduct,
-  makeAdjustment
+  makeAdjustment,
 }
 
 //to display on leaderboard
@@ -31,7 +31,7 @@ function getProfile (id, db = connection) {
 //when a user chooses a product to purchase
 function getProduct (id, db = connection) {
   return db('products')
-  .where('id', id)
+  .where('product_id', id)
   .select()
 }
 
