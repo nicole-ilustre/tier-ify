@@ -28,11 +28,15 @@
     <div class="container pt-4">
       <h3 class="mb-5">Product Listing</h3>
 
-        <div class="row">
+      {{#each products}}
+
+         <h5>{{product_name}}</h5>
+            <a href="./store.html" target="_blank"><img class="mb-4 img-fluid rounded" src="../images/5-EDA.jpg" alt="for five EDA points"></a>
+
+        {{!-- <div class="row">
           <div class="col-lg">
             
-            <h5>One-on-One Mindfulness With John G.</h5>
-            <a href="./store.html" target="_blank"><img class="mb-4 img-fluid rounded" src="../images/5-EDA.jpg" alt="for five EDA points"></a>
+         
 
             <h5>Interview Practice With Sarah E.</h5>
             <a href="./store.html" target="_blank"><img class="mb-4 img-fluid rounded" src="../images/10-EDA.jpg" alt="for ten EDA points"></a>
@@ -48,8 +52,9 @@
               <h5>Dinner Date With JV</h5>
               <a  href="./store.html" target="_blank"><img class="mb-4 img-fluid rounded" src="../images/50-EDA.jpg" alt="for fifty EDA points"></a>
 
-            </div>
-          
+            </div>  --}}
+
+      {{/each}}
           <div class="col-lg">
             <h3 class="mb-5">LeaderBoard</h3>
             <div class="row">
