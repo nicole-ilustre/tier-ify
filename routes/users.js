@@ -4,14 +4,6 @@ const db = require('../db')
 
 const router = express.Router()
 
-{ 
-  users: [ //objects of users
-
-  ], 
-  products: [ // objects of products
-
-  ]
-}
 router.get('/', (req, res) => {
   db.getUsers()
     .then(users => {
