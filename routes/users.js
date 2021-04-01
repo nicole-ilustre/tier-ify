@@ -1,15 +1,17 @@
 const express = require('express')
 const db = require('../db')
+const {sortLeaderboard} = require('../lib')
 const router = express.Router()
-
-
 
 router.get('/', (req, res) => {
   db.getStudents()
     .then(students => {
       db.getProducts()
         .then(products => {
-          res.render('home', { students, products })
+          let sorted = sortLeaderboard(students)
+          console.log("Students: ", students)
+          console.log("Sorted: ",sorted)
+          res.render('home', { sorted, products })
         })
       })
     .catch(err => {

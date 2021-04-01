@@ -3,13 +3,13 @@
   {{#each products}}
 
     <h5>{{product_name}}</h5>
-    <a href="./store.html" target="_blank"><img class="mb-4 img-fluid rounded" src="../images/5-EDA.jpg" alt="for five EDA points"></a>
+    <a href="./store.html" target="_blank"><img class="mb-4 img-fluid rounded" src="/images/5-EDA.jpg" alt="for five EDA points"></a>
 
   {{/each}}
 
   <div class="col-lg">
     <h3 class="mb-5">LeaderBoard</h3>
-    {{#each profiles}}
+    {{#each sorted}}
       {{>lb-item}}
     {{/each}}
   </div>
