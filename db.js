@@ -3,12 +3,12 @@ const config = require('./knexfile')[environment]
 const connection = require('knex')(config)
 
 module.exports = {
-  getStudents: getStudents,
-  getProducts: getProducts,
-  getProfile: getProfile,
-  getProduct: getProduct,
-  addProduct: addProduct,
-  makeAdjustment: makeAdjustment
+  getStudents,
+  getProducts,
+  getProfile,
+  getProduct,
+  addProduct,
+  makeAdjustment
 }
 
 //to display on leaderboard
