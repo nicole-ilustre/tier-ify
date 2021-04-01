@@ -5,10 +5,10 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('students').insert([
-        {id: 1, name: 'Nicole', points: 0},
-        {id: 2, name: 'Sam', points: 0},
-        {id: 3, name: 'Caleb', points: 0},
-        {id: 4, name: 'Dainy', points: 0},
+        {id: 1, name: 'Nicole', points: 12},
+        {id: 2, name: 'Sam', points: 5},
+        {id: 3, name: 'Caleb', points: 76},
+        {id: 4, name: 'Dainy', points: 15},
         {id: 5, name: 'Aaron', points: 0},
         {id: 6, name: 'Nathan', points: 0},
         {id: 7, name: 'Kent', points: 0},
