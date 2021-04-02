@@ -9,6 +9,7 @@ const sortLeaderboard = (students) => {
   })
 }
 
+
 Handlebars.registerHelper("rank", function (value, options) {
   return parseInt(value) + 1;
 });

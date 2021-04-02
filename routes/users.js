@@ -9,8 +9,6 @@ router.get('/', (req, res) => {
       db.getProducts()
         .then(products => {
           let sorted = sortLeaderboard(students)
-          console.log("Students: ", students)
-          console.log("Sorted: ",sorted)
           res.render('home', { sorted, products })
         })
       })
@@ -20,20 +18,19 @@ router.get('/', (req, res) => {
 })
 
 router.get('/student/:id', (req, res) => {
-  const id = req.params.id
+  const id = Number(req.params.id)
   db.getProfile(id)
     .then(student => {
-      res.render('STUDENT PROFILE', { student })
+      db.getAdjustments(id).then((adjustments) => {
+        res.render('profile', {student, adjustments})
     })
-})
-
-router.get('/product/:id', (req, res) => {
-  const id = req.params.id
-  db.getProduct(id)
-    .then(product => {
-      console.log({ product })
-      res.render('PRODUCT INFO', { product })
-    })
+    .catch(err => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })     
+  })
+  .catch(err => {
+    res.status(500).send('DATABASE ERROR: ' + err.message)
+  })
 })
 
 router.get('/query', (req, res) => {
@@ -43,11 +40,39 @@ router.get('/query', (req, res) => {
     .then(product => {
       db.getProfile(student_id)
         .then(student => {
+          res.render('checkout', { student, product })
         })
-      res.render('CHECKOUT INFO', { student, product })
     })
 })
 
-// router.post('') 
+router.post('/adjustment/:id', (req, res) => {
+  const id = Number(req.params.id)
+  const {reason, adjustment} = req.body  
+
+  db.addAdjustment({
+    "reason": reason,
+    "adjustment": Number(adjustment),
+    "student_id": id
+  })
+  .then((adjustment_id) => {
+    db.getAdjustment(adjustment_id)
+    .then((adjustment) =>{
+      db.getPoints(id)
+      .then((points) => {
+        console.log(points)
+        console.log(typeof points)
+        db.updatePoints(adjustment, points.points)
+        
+        .then(() => {
+          res.redirect('/student/' + id)
+        })
+      })
+    })
+    
+    
+  })
+
+ 
+})
 
 module.exports = router

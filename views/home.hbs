@@ -1,15 +1,38 @@
-<div class="container pt-4">
+ <div class="container pt-4">
   <h3 class="mb-5">Product Listing</h3>
-  {{#each products}}
-    <h5>{{product_name}}</h5>
-    <a href="./store.html" target="_blank"><img class="mb-4 img-fluid rounded" src="/images/5-EDA.jpg" alt="for five EDA points"></a>
-  {{/each}}
-
-  <div class="col-lg">
-    <h3 class="mb-5">LeaderBoard</h3>
-    {{#each sorted}}
-      {{>lb-item}}
-    {{/each}}
+    <div class="row">
+      <div class="col-lg">
+        {{#each products}}
+          <h5>{{product_name}}</h5>
+          <img class="mb-4 img-fluid rounded" src="/images/{{image}}" alt="for five EDA points">
+          <button type="button" class="btn btn-success">Buy Now</button>
+          <a href="http://localhost:3000/query?product_id={{product_id}}&student_id={{id}}">BUY FOR {{price}} EDA points</a>
+          </button>
+        {{/each}}
+      </div>
+   
+      <div class="col-lg">
+        <div class="container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Person</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each sorted}}
+                {{>lb-item}}
+              {{/each}}
+            </tbody>
+          </table>
+      </div>
   </div>
 </div>
+
+
+
+
+
 
