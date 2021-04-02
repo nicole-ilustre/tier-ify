@@ -2,13 +2,19 @@
   <h3 class="mb-5">Product Listing</h3>
     <div class="row">
       <div class="col-lg">
+        {{#if id}}
         {{#each products}}
           <h5>{{product_name}}</h5>
           <img class="mb-4 img-fluid rounded" src="/images/{{image}}" alt="for five EDA points">
-          <button type="button" class="btn btn-success">Buy Now</button>
-          <a href="http://localhost:3000/query?product_id={{product_id}}&student_id={{id}}">BUY FOR {{price}} EDA points</a>
-          </button>
+          <form action="/purchase/{{../id}}?product_id={{product_id}}&student_id={{../id}}" method="post">
+            <input type="hidden" name="adjustment" value="-{{price}}">
+            <input type="hidden" name="reason" value="Bought {{product_name}}">
+            <button type="submit" name="" value="Submit" class="btn btn-success">Buy now - {{price}}</button>
+          </form>
+       
+          
         {{/each}}
+        {{/if}}
       </div>
    
       <div class="col-lg">

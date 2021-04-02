@@ -1,9 +1,12 @@
 const request = require('supertest')
 const cheerio = require('cheerio')
+const db = require('../db')
+
+const server = require('./server')
 
 jest.mock('../db', () => ({
-  getUser: (id) => Promise.resolve(
-    {id: id, name: 'test user', email: 'test@user.nz'}
+  getProfile: (id) => Promise.resolve(
+    {id: 1, name: 'Nicole', email: 'test@user.nz'}
   ),
   getUsers: () => Promise.resolve([
     {id: 2, name: 'test user 2', email: 'test2@user.nz'},
@@ -13,9 +16,9 @@ jest.mock('../db', () => ({
 
 const server = require('../server')
 
-test('GET /', () => {
+test('GET /student/:id', () => {
   return request(server)
-    .get('/')
+    .get('/student/:id')
     .expect(200)
     .then((res) => {
       const $ = cheerio.load(res.text)

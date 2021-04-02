@@ -9,6 +9,11 @@ const sortLeaderboard = (students) => {
   })
 }
 
+Handlebars.registerHelper('num', (value, options) => {
+  if( typeof value === 'number' ) {
+    return options.fn(this);
+  }
+})
 
 Handlebars.registerHelper("rank", function (value, options) {
   return parseInt(value) + 1;
