@@ -45,7 +45,7 @@ function addProduct (name, price, db = database) {
   return db('todos').insert({
     product_name: name,
     price: price
-  })
+  }, 'id')
 }
 
 //make calculations to student's points when making puuchases
@@ -73,7 +73,7 @@ function getPoints (id, db=connection) {
 
 function addAdjustment (adjustment, db = connection) {
   return db('adjustments')
-  .insert(adjustment)
+  .insert(adjustment, 'id')
 }
 
 function getAdjustment(id, db = connection) {
