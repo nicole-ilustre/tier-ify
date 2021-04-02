@@ -1,14 +1,31 @@
-<div class="container-md mb-5 text-center">
+<div class="container mb-12 text-center">
   <div class=""container-md mb-5 text-center"">
-    <div class="h3">{{name}}</div>
-        <p class="h5">User id: {{id}}</p>
-    <div class="h3">Points: <b class="h5">{{points}}</b></div>
+    <div class="h3">{{student.name}}</div>
+        <p class="h5">User id: {{student.id}}</p>
+    <div class="h3">Points: <b class="h5">{{student.points}}</b></div>
+    <button onclick="location.href='/{{student.id}}'">Purchase Items</button>
   </div>
   <div>
-    {{#each adjustments}}
-      {{>adjustment}}
-    {{/each}}
+   
+      <div class="col-lg">
+        <div class="container w-50">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Adjustment</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each adjustments}}
+                {{>adjustment}}
+              {{/each}}
+            </tbody>
+          </table>
+      </div>
+  </div>
+</div>
         
-    {{>updateForm}} 
+    {{>adjustmentForm}} 
   </div>
 </div>

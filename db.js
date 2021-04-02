@@ -8,7 +8,11 @@ module.exports = {
   getProfile,
   getProduct,
   addProduct,
-  makeAdjustment,
+  getAdjustments,
+  updatePoints,
+  addAdjustment,
+  getPoints,
+  getAdjustment
 }
 
 //to display on leaderboard
@@ -26,6 +30,7 @@ function getProfile (id, db = connection) {
   return db('students')
   .where('id', id)
   .select()
+  .first()
 }
 
 //when a user chooses a product to purchase
@@ -40,14 +45,40 @@ function addProduct (name, price, db = database) {
   return db('todos').insert({
     product_name: name,
     price: price
-  })
+  }, 'id')
 }
 
 //make calculations to student's points when making puuchases
-function makeAdjustment (id, db = connection) {
+function getAdjustments (id, db = connection) {
+  return db('adjustments')
+    .join('students', 'students.id', 'adjustments.student_id')
+    .where('students.id', id)
+    .select('*', 'students.id as student_id')
+}
+
+function updatePoints (adjustment, points, db = connection) {
   return db('students')
-  .join('adjustments', 'adjustments.student_id', 'student.id')
-  .where('students.id', id)
-  .select('*', 'student.id as id', 'adjustments.id as id')
-  .first()
+  .where('id', adjustment.student_id)
+  .update({'points': Number(points) + adjustment.adjustment})
+}
+
+function getPoints (id, db=connection) {
+  return db('students')
+    .where('id', id)
+    .select('points')
+    .first()
+}
+
+
+
+function addAdjustment (adjustment, db = connection) {
+  return db('adjustments')
+  .insert(adjustment, 'id')
+}
+
+function getAdjustment(id, db = connection) {
+  return db('adjustments')
+    .where('adjustment_id', id)//student_id?
+    .select()
+    .first()
 }

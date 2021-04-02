@@ -9,9 +9,7 @@ router.get('/', (req, res) => {
       db.getProducts()
         .then(products => {
           let sorted = sortLeaderboard(students)
-          console.log("Students: ", students)
-          console.log("Sorted: ",sorted)
-          res.render('home', { sorted, products })
+          res.render('home', { sorted, products})
         })
       })
     .catch(err => {
@@ -19,35 +17,93 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+  let id = req.params.id
+  db.getStudents()
+    .then(students => {
+      db.getProducts()
+        .then(products => {
+          let sorted = sortLeaderboard(students)
+          res.render('home', { sorted, products, id})
+        })
+    })
+    .catch(err => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
+})
+
 router.get('/student/:id', (req, res) => {
-  const id = req.params.id
+  const id = Number(req.params.id)
   db.getProfile(id)
     .then(student => {
-      res.render('STUDENT PROFILE', { student })
+      db.getAdjustments(id).then((adjustments) => {
+        res.render('profile', {student, adjustments})
     })
+    .catch(err => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })     
+  })
+  .catch(err => {
+    res.status(500).send('DATABASE ERROR: ' + err.message)
+  })
 })
 
-router.get('/product/:id', (req, res) => {
-  const id = req.params.id
-  db.getProduct(id)
-    .then(product => {
-      console.log({ product })
-      res.render('PRODUCT INFO', { product })
+router.post('/adjustment/:id', (req, res) => {
+  const id = Number(req.params.id)
+  const {reason, adjustment} = req.body  
+
+  db.addAdjustment({
+    "reason": reason,
+    "adjustment": Number(adjustment),
+    "student_id": id
+  })
+  .then((adjustment_id) => {
+    db.getAdjustment(adjustment_id)
+    .then((adjustment) =>{
+      db.getPoints(id)
+      .then((points) => {
+        db.updatePoints(adjustment, points.points)
+        
+        .then(() => {
+          res.redirect('/student/' + id)
+        })
+      })
     })
+  })
 })
 
-router.get('/query', (req, res) => {
+router.post('/purchase/:id', (req, res) => {
   const product_id = req.query.product_id
   const student_id = req.query.student_id
-  db.getProduct(product_id)
-    .then(product => {
-      db.getProfile(student_id)
-        .then(student => {
-        })
-      res.render('CHECKOUT INFO', { student, product })
-    })
-})
+  const id = Number(req.params.id)
+  const {reason, adjustment} = req.body  
 
-// router.post('') 
+  db.addAdjustment({
+    "reason": reason,
+    "adjustment": Number(adjustment),
+    "student_id": id
+  })
+  .then((adjustment_id) => {
+    db.getAdjustment(adjustment_id)
+    .then((adjustment) =>{
+      db.getPoints(id)
+      .then((points) => {
+        console.log(points)
+        console.log(typeof points)
+        db.updatePoints(adjustment, points.points)
+        
+        .then(() => {
+          db.getProduct(product_id)
+            .then(product => {
+              db.getProfile(student_id)
+                .then(student => {
+                  res.render('checkout', { student, product })
+                })
+            })
+        })
+      })
+    })
+  })
+})
 
 module.exports = router

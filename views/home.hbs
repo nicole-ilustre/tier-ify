@@ -1,15 +1,44 @@
-<div class="container pt-4">
+ <div class="container pt-4">
   <h3 class="mb-5">Product Listing</h3>
-  {{#each products}}
-    <h5>{{product_name}}</h5>
-    <a href="./store.html" target="_blank"><img class="mb-4 img-fluid rounded" src="/images/5-EDA.jpg" alt="for five EDA points"></a>
-  {{/each}}
-
-  <div class="col-lg">
-    <h3 class="mb-5">LeaderBoard</h3>
-    {{#each sorted}}
-      {{>lb-item}}
-    {{/each}}
+    <div class="row">
+      <div class="col-lg">
+        {{#if id}}
+        {{#each products}}
+          <h5>{{product_name}}</h5>
+          <img class="mb-4 img-fluid rounded" src="/images/{{image}}" alt="for five EDA points">
+          <form action="/purchase/{{../id}}?product_id={{product_id}}&student_id={{../id}}" method="post">
+            <input type="hidden" name="adjustment" value="-{{price}}">
+            <input type="hidden" name="reason" value="Bought {{product_name}}">
+            <button type="submit" name="" value="Submit" class="btn btn-success">Buy now - {{price}}</button>
+          </form>
+       
+          
+        {{/each}}
+        {{/if}}
+      </div>
+   
+      <div class="col-lg">
+        <div class="container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Person</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each sorted}}
+                {{>lb-item}}
+              {{/each}}
+            </tbody>
+          </table>
+      </div>
   </div>
 </div>
+
+
+
+
+
 

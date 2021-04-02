@@ -1,4 +1,4 @@
-<form class="" action="/edit/{{id}}" method="post">
+<form class="" action="/adjustment/{{student.id}}" method="post">
     <h2>Make Adjustment</h2>
     
     <div>
@@ -13,17 +13,11 @@
     <label for="reason" class="reason">
         Reason:
      </label>
-    <input type="text" name="reason" placeholder="{{name}} wasn't annoying">
+    <input type="text" name="reason" placeholder="{{student.name}} wasn't annoying">
     </div>
-  
-  <div>
-    <label for="assigner" class="assigner">
-        Assigner:
-     </label>
-    <input type="text" name="assigner" placeholder="JV">
-    </div>
-  
+
   <div>
     <input class="" type="submit" name="" value="Submit">
   </div>
+
 </form>
